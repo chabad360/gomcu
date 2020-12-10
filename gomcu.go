@@ -248,8 +248,11 @@ func (s *ControlSurface) Reset() {
 	for i := 0; i <= switches.LenChannels-1; i++ {
 		s.SetFaderPos(switches.Channel(i), 0x1FFF)
 	}
-	for i := 0; i <= switches.LenChannels-1; i++ {
+	for i := 0; i <= switches.LenChannels-2; i++ {
 		s.SetVPot(switches.Channel(i), switches.VPotMode3, switches.VPot6+switches.VPotDot)
+	}
+	for i := 0; i <= switches.LenChannels-2; i++ {
+		s.SetMeter(switches.Channel(i), switches.MoreThan0)
 	}
 
 	time.Sleep(time.Second)
@@ -319,10 +322,14 @@ func (s *ControlSurface) SetLCD(offset uint8, text string) error {
 		return fmt.Errorf("SetLCD: text and/or offset to larger than available lcd space")
 	}
 
-	data := append(append(header, 0x12, offset), []byte(text)...)
-	return writer.SysEx(s.writer, data)
+	return writer.SysEx(s.writer, append(append(header, 0x12, offset), []byte(text)...))
 }
 
 func (s *ControlSurface) SetVPot(channel switches.Channel, mode switches.VPotMode, led switches.VPotLED) error {
 	return writer.ControlChange(s.writer, byte(channel+0x30), byte(mode)+byte(led))
+}
+
+func (s *ControlSurface) SetMeter(channel switches.Channel, value switches.Signal) error {
+	writer.SysEx(s.writer, append(header, 0x21, 0x00))
+	return writer.Aftertouch(s.writer, byte(channel<<4)+byte(value))
 }
