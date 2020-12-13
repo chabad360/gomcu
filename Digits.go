@@ -1,5 +1,6 @@
-package switches
+package gomcu
 
+// A Digit is a single 7-segment display on the Control Surface
 type Digit byte
 
 const (
@@ -13,9 +14,9 @@ const (
 	Hour
 	TenHour
 	HundredHour
+
 	AssignRight
 	AssignLeft
 
 	LenDigits = 12
-	DigitDot  = 0x40
 )

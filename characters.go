@@ -1,5 +1,7 @@
-package switches
+package gomcu
 
+// Char is an ASCII character between 0x21 (33) and 0x60 (96).
+// Note: if the character is above 0x40 (64) subtract 0x40 from it, otherwise the wrong character will be displayed.
 type Char byte
 
 const (
@@ -67,6 +69,8 @@ const (
 	SymbolEqual
 	SymbolGreaterThan
 	SymbolQuestion
+	// Add DigitDot to the character you want to display to show the dot found on each 7-segment display.
+	DigitDot
 )
 
 var (

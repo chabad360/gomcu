@@ -1,5 +1,6 @@
-package switches
+package gomcu
 
+// A Channel is used to define which Fader, Meter or VPot should be modified.
 type Channel byte
 
 const (
@@ -11,10 +12,13 @@ const (
 	Channel6
 	Channel7
 	Channel8
+	// Master is only a fader and will do nothing if used to set a VPot or a Meter.
 	Master
+
 	LenChannels = 9
-	FaderMax    = 0x1FFF
-	FaderMin    = -0x1FFF
+
+	FaderMax = 16382
+	FaderMin = 0
 )
 
 var (

@@ -1,5 +1,6 @@
-package switches
+package gomcu
 
+// A Switch is a button and/or LED that can be pressed and or lit.
 type Switch byte
 
 const (
@@ -120,6 +121,7 @@ const (
 	BeatsLED
 	RudeSoloLED
 	RelayClickLED
+
 	LenIDs = 120
 )
 
